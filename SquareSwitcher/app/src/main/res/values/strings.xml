@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Square Switcher</string>
+    <string name="move_count">Move Count: 0</string>
+    <string name="sequence">Sequence:</string>
 </resources>

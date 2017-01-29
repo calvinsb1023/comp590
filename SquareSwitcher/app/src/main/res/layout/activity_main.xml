@@ -1,17 +1,315 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorBackSeaFoam"
     tools:context="com.calvinbarker.squareswitcher.MainActivity">
 
     <TextView
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="@string/app_name"
+        android:textSize="28dp"/>
+
+    <!-- Main layout -->
+    <RelativeLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical">
+
+        <!-- Layout to house the rows for the 4x4 box -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true">
+
+            <!-- Layout to house cells of each row -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Each cell -->
+                <Button
+                    android:id="@+id/sq0"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="0"
+                    android:paddingRight="4dp"/>
+                <Button
+                    android:id="@+id/sq1"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="1"
+                    android:padding="4dp"/>
+                <Button
+                    android:id="@+id/sq2"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="2"/>
+                <Button
+                    android:id="@+id/sq3"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="3"/>
+            </LinearLayout>
+
+            <!-- Layout to house cells of each row -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true">
+
+                <!-- Each cell -->
+                <Button
+                    android:id="@+id/sq4"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="4"/>
+                <Button
+                    android:id="@+id/sq5"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="5"/>
+                <Button
+                    android:id="@+id/sq6"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="6"/>
+                <Button
+                    android:id="@+id/sq7"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="7"/>
+            </LinearLayout>
+
+            <!-- Layout to house cells of each row -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true">
+
+                <!-- Each cell -->
+                <Button
+                    android:id="@+id/sq8"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="8"/>
+                <Button
+                    android:id="@+id/sq9"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="9"/>
+                <Button
+                    android:id="@+id/sq10"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="10"/>
+                <Button
+                    android:id="@+id/sq11"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="11" />
+                <!--android:backgroundTint="@android:color/background_light"-->
+            </LinearLayout>
+
+            <!-- Layout to house cells of each row -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true">
+
+                <!-- Each cell -->
+                <Button
+                    android:id="@+id/sq12"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="12"/>
+                <Button
+                    android:id="@+id/sq13"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="13"/>
+                <Button
+                    android:id="@+id/sq14"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="14"/>
+                <Button
+                    android:id="@+id/sq15"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="15" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- View for below the board -->
+        <RelativeLayout
+            android:id="@+id/submenu"
+            android:layout_width="match_parent"
+            android:layout_height="235dp"
+            android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_horizontal_margin"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/move_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/move_count"/>
+                <TextView
+                    android:id="@+id/sequence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sequence"/>
+            </LinearLayout>
+
+            <!-- layout for switch rows -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <!-- Rows to house the switch -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/swA"
+                        android:layout_width="@dimen/switch_size"
+                        android:layout_height="@dimen/switch_size"
+                        android:text="A"
+                        android:backgroundTint="@color/colorPurplish"
+                        android:onClick="pressSwitch"/>
+                    <Button
+                        android:id="@+id/swB"
+                        android:layout_width="@dimen/switch_size"
+                        android:layout_height="@dimen/switch_size"
+                        android:text="B"
+                        android:backgroundTint="@color/colorPurplish"
+                        android:onClick="pressSwitch"/>
+                    <Button
+                        android:id="@+id/swC"
+                        android:layout_width="@dimen/switch_size"
+                        android:layout_height="@dimen/switch_size"
+                        android:text="C"
+                        android:backgroundTint="@color/colorPurplish"
+                        android:onClick="pressSwitch"/>
+                    <Button
+                        android:id="@+id/swD"
+                        android:layout_width="@dimen/switch_size"
+                        android:layout_height="@dimen/switch_size"
+                        android:text="D"
+                        android:backgroundTint="@color/colorPurplish"
+                        android:onClick="pressSwitch"/>
+                    <Button
+                        android:id="@+id/swE"
+                        android:layout_width="@dimen/switch_size"
+                        android:layout_height="@dimen/switch_size"
+                        android:text="E"
+                        android:backgroundTint="@color/colorPurplish"
+                        android:onClick="pressSwitch"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/swF"
+                        android:layout_width="@dimen/switch_size"
+                        android:layout_height="@dimen/switch_size"
+                        android:text="F"
+                        android:backgroundTint="@color/colorPurplish"
+                        android:onClick="pressSwitch"/>
+                    <Button
+                        android:id="@+id/swG"
+                        android:layout_width="@dimen/switch_size"
+                        android:layout_height="@dimen/switch_size"
+                        android:text="G"
+                        android:backgroundTint="@color/colorPurplish"
+                        android:onClick="pressSwitch"/>
+                    <Button
+                        android:id="@+id/swH"
+                        android:layout_width="@dimen/switch_size"
+                        android:layout_height="@dimen/switch_size"
+                        android:text="H"
+                        android:backgroundTint="@color/colorPurplish"
+                        android:onClick="pressSwitch"/>
+                    <Button
+                        android:id="@+id/swI"
+                        android:layout_width="@dimen/switch_size"
+                        android:layout_height="@dimen/switch_size"
+                        android:text="I"
+                        android:backgroundTint="@color/colorPurplish"
+                        android:onClick="pressSwitch"/>
+                    <Button
+                        android:id="@+id/swJ"
+                        android:layout_width="@dimen/switch_size"
+                        android:layout_height="@dimen/switch_size"
+                        android:text="J"
+                        android:backgroundTint="@color/colorPurplish"
+                        android:onClick="pressSwitch"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Layout to house the action buttons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Restart"
+                    android:onClick="resetBoard"
+                    android:backgroundTint="@color/off_white"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Auto"
+                    android:backgroundTint="@color/off_white"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
 </RelativeLayout>
