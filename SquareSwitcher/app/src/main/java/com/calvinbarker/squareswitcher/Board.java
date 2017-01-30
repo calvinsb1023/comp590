@@ -96,8 +96,8 @@ public class Board {
     }
 
     protected void resetBoard() {
-        //assignments = getRandomizedBoard();
-        assignments = testBoard();
+        assignments = getRandomizedBoard();
+        //assignments = testBoard();
         move_count = 0;
         sequence = "";
     }
@@ -149,24 +149,12 @@ public class Board {
         }
     }
 
-    /*
-    protected List<String> findSolList(int[] squares, int switchPos) {
-        List<String> branch = new ArrayList<>();
-        if (isSolved(squares)) {
-            return branch;
-        } else {
-            int[] newSquares = solSwitch()
-        }
-        return null;
-    }*/
-
     protected String findSol(int[] squares, int switchPos) {
+
         // Returns blank string if no more switches are needed
-        //System.out.println(Arrays.toString(squares));
         if (isSolved(squares)) {
             return "";
         } else {
-            //System.out.println("testing... " + System.currentTimeMillis() + " " + switchNames[switchPos]);
             String currentSol  = "Solution Not Found";
             int [] tempSquares = solSwitch(squares, switches[switchPos]);
 
@@ -177,11 +165,7 @@ public class Board {
                     System.out.println("What move looks like: " + move);
                     String tempSol = switchNames[switchPos].concat(move);
 
-                    //System.out.println("tempSol: " + tempSol);
-                    //System.out.println("currentSol:" + currentSol);
-
                     if (tempSol.length() < currentSol.length()) {
-                        //System.out.println("Made it in if");
                         currentSol = tempSol;
                     }
                 }
