@@ -13,6 +13,11 @@ public class MainActivity extends Activity {
     Board board;
     Button[] buttons;
 
+    int[] switch0 = {1, 1, 1, 1,
+                        1, 1, 1, 1,
+                        1, 1, 1, 1,
+                        1, 1, 1, 1,};
+
     int[] switchA = {-1, -1, -1, 1,
                         1, 1, 1, 1,
                         1, 1, 1, 1,
@@ -54,6 +59,9 @@ public class MainActivity extends Activity {
                         1, -1, 1, 1,
                         1, -1, 1, 1};
 
+    int[][] switches = {switch0, switchA, switchB, switchC, switchD, switchE, switchF, switchG,
+                        switchH, switchI, switchJ};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +70,8 @@ public class MainActivity extends Activity {
 
         board = new Board();
         setBoard();
+        setMoveCount();
+        setSequence();
 
     }
 
@@ -108,11 +118,19 @@ public class MainActivity extends Activity {
 
     public void resetBoard(View v) {
         board = new Board();
+        setMoveCount();
+        setSequence();
+        setBoard();
+    }
+
+    public void setMoveCount() {
         TextView move_count = (TextView) findViewById(R.id.move_count);
-        move_count.setText("Move Count: " + board.getMoveCount());
+        move_count.setText("Move Count\n" + board.getMoveCount());
+    }
+
+    public void setSequence() {
         TextView sequence = (TextView) findViewById(R.id.sequence);
         sequence.setText("Sequence: " + board.getSequence());
-        setBoard();
     }
 
     public void pressSwitch(View v) {
@@ -158,10 +176,12 @@ public class MainActivity extends Activity {
                 board.passSwitch(switchJ);
                 break;
         }
-        TextView move_count = (TextView) findViewById(R.id.move_count);
-        move_count.setText("Move Count: " + board.getMoveCount());
+        setMoveCount();
         setSquares(board.getAssignments());
-        TextView sequence = (TextView) findViewById(R.id.sequence);
-        sequence.setText("Sequence: " + board.getSequence());
+        setSequence();
+    }
+
+    public void pressSolution(View v) {
+        board.processSolution();
     }
 }

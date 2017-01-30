@@ -10,4 +10,7 @@
     <color name="colorBackSeaFoam">#A4C2A5</color>
     <color name="colorPurplish">#9197AE</color>
     <color name="black_overlay">#66000000</color>
+    <color name="colorGold">#DDD78D</color>
+    <color name="colorLightBlue">#CEE5F2</color>
+    <color name="colorPeach">#EFBC9B</color>
 </resources>
