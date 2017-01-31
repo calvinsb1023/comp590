@@ -182,6 +182,11 @@ public class MainActivity extends Activity {
     }
 
     public void pressSolution(View v) {
+        System.out.println("pressed");
         board.processSolution();
+        setMoveCount();
+        setSquares(board.getAssignments());
+        setSequence();
+
     }
 }

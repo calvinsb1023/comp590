@@ -1,8 +1,6 @@
 package com.calvinbarker.squareswitcher;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * Created by barkerc1 on 1/27/17.
@@ -13,6 +11,7 @@ public class Board {
     private int[] assignments;
     private int move_count;
     private String sequence;
+    private HashMap<String, int[]> switchMap = new HashMap<>();
 
     int[] switch0 = {1, 1, 1, 1,
             1, 1, 1, 1,
@@ -62,9 +61,9 @@ public class Board {
 
     int[][] switches = {switch0, switchA, switchB, switchC, switchD, switchE, switchF, switchG,
             switchH, switchI, switchJ, switch0};
-    //int[][] switches = {switch0, switchA, switchB, switchC};
 
-    String[] switchNames = {"", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+    String[] switchNames = {"", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", ""};
+
 
     public Board() {
         resetBoard();
@@ -96,8 +95,8 @@ public class Board {
     }
 
     protected void resetBoard() {
-        assignments = getRandomizedBoard();
-        //assignments = testBoard();
+        //assignments = getRandomizedBoard();
+        assignments = testBoard();
         move_count = 0;
         sequence = "";
     }
@@ -128,29 +127,34 @@ public class Board {
         int squareSums = 0;
         for (int i : squares)
             squareSums += i;
-        //System.out.println(squareSums);
         if (squareSums == 16 || squareSums == -16)
             return true;
         return false;
     }
 
     public void processSolution() {
-        System.out.println("Processing...");
+
+        for (int i = 0; i < switchNames.length; i++) {
+            switchMap.put(switchNames[i], switches[i]);
+        }
+
         String sol = findSol(assignments, 0);
+
         if (sol.equals("Solution Not Found")) {
             System.out.println("No solution found");
+            sequence = "Sorry, no solution found :/";
         } else {
-            int solLen = sol.length();
-            move_count = solLen;
             System.out.println("Solution:" + sol);
-            for (int i = 0; i < solLen; i++) {
-                logMove(String.valueOf(sol.charAt(i)));
+            sequence = "";
+            for (int i = 0; i < sol.length(); i++) {
+                String sw = String.valueOf(sol.charAt(i));
+                logMove(sw);
+                passSwitch(switchMap.get(sw));
             }
         }
     }
 
     protected String findSol(int[] squares, int switchPos) {
-
         // Returns blank string if no more switches are needed
         if (isSolved(squares)) {
             return "";
@@ -162,7 +166,6 @@ public class Board {
                 String move = findSol(tempSquares, sw);
 
                 if (!move.equals("Solution Not Found")) {
-                    System.out.println("What move looks like: " + move);
                     String tempSol = switchNames[switchPos].concat(move);
 
                     if (tempSol.length() < currentSol.length()) {
@@ -170,7 +173,7 @@ public class Board {
                     }
                 }
             }
-            System.out.println("out of for loop:" + currentSol);
+            //System.out.println("out of for loop:" + currentSol);
             return currentSol;
         }
     }
