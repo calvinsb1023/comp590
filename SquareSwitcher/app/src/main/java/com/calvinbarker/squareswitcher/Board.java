@@ -1,6 +1,7 @@
 package com.calvinbarker.squareswitcher;
 
 import java.util.HashMap;
+import java.util.Arrays;
 
 /**
  * Created by barkerc1 on 1/27/17.
@@ -88,6 +89,39 @@ public class Board {
 
     /**
      *
+     * @return blank board where all items are white or black
+     */
+    public int[] blankBoard() {
+        if (Math.random() < 0.5) {
+            int[] tB = {1, 1, 1, 1,
+                    1, 1, 1, 1,
+                    1, 1, 1, 1,
+                    1, 1, 1, 1};
+            return tB;
+        }
+        int[] tB = {-1, -1, -1, -1,
+                -1, -1, -1, -1,
+                -1, -1, -1, -1,
+                -1, -1, -1, -1};
+        return tB;
+    }
+
+    /**
+     *
+     * @return a board that can be beaten with some combination of switches so that the game
+     * can actually be fun
+     */
+    public void setBeatableBoard() {
+        assignments = blankBoard();
+        for (int i = 0; i < switches.length; i++){
+            if (Math.random() < 0.5) {
+                passSwitch(switches[i]);
+            }
+        }
+    }
+
+    /**
+     *
      * @return an array of 16 integers (all randomly-generated 1's or -1's to correspond with black/white)
      */
     public int[] getAssignments(){
@@ -95,8 +129,7 @@ public class Board {
     }
 
     protected void resetBoard() {
-        //assignments = getRandomizedBoard();
-        assignments = testBoard();
+        setBeatableBoard();
         move_count = 0;
         sequence = "";
     }
@@ -134,6 +167,8 @@ public class Board {
 
     public void processSolution() {
 
+        System.out.println(Arrays.toString(assignments));
+
         for (int i = 0; i < switchNames.length; i++) {
             switchMap.put(switchNames[i], switches[i]);
         }
@@ -145,6 +180,7 @@ public class Board {
             sequence = "Sorry, no solution found :/";
         } else {
             System.out.println("Solution:" + sol);
+            move_count = 0;
             sequence = "";
             for (int i = 0; i < sol.length(); i++) {
                 String sw = String.valueOf(sol.charAt(i));
@@ -188,13 +224,5 @@ public class Board {
      */
     public String getSequence() {
         return sequence;
-    }
-
-    public int[] testBoard() {
-        int[] tB = {1, 1, 1, 1,
-                    1, 1, 1, 1,
-                    1, 1, 1, 1,
-                    1, 1, 1, 1};
-        return tB;
     }
 }

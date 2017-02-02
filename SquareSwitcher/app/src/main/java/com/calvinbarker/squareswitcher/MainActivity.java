@@ -1,8 +1,9 @@
 package com.calvinbarker.squareswitcher;
 
 import android.app.Activity;
-import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -76,18 +77,13 @@ public class MainActivity extends Activity {
     }
 
     public void setSquares(int[] squares) {
-        ColorStateList offWhite = getResources().getColorStateList(R.color.off_white);
-        ColorStateList darkGray = getResources().getColorStateList(R.color.dark_gray);
+        Drawable darkButton = getResources().getDrawable(R.drawable.dark_button);
+        Drawable lightButton = getResources().getDrawable(R.drawable.light_button);
         for (int i = 0; i < 16; i++) {
-            if (squares[i] == -1) {
-                buttons[i].setBackgroundTintList(darkGray);
-                //buttons[i].setTextColor(offWhite);
-                //buttons[i].setBackgroundColor(getResources().getColor(R.color.colorDarkGray));
-            }
+            if (squares[i] == -1)
+                buttons[i].setBackground(darkButton);
             else
-                buttons[i].setBackgroundTintList(offWhite);
-                //buttons[i].setTextColor(darkGray);
-                //buttons[i].setBackgroundColor(getResources().getColor(R.color.colorBackWhite));
+                buttons[i].setBackground(lightButton);
         }
     }
 

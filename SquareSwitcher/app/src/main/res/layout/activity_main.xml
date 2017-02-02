@@ -60,13 +60,13 @@
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
                     android:text="0"
-                    android:paddingRight="4dp"/>
+                    android:background="@drawable/dark_button" />
                 <Button
                     android:id="@+id/sq1"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
                     android:text="1"
-                    android:padding="4dp"/>
+                    android:background="@drawable/dark_button" />
                 <Button
                     android:id="@+id/sq2"
                     android:layout_width="@dimen/button_size"
