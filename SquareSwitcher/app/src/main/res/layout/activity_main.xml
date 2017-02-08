@@ -59,14 +59,12 @@
                     android:id="@+id/sq0"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="0"
-                    android:background="@drawable/dark_button" />
+                    android:text="0" />
                 <Button
                     android:id="@+id/sq1"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="1"
-                    android:background="@drawable/dark_button" />
+                    android:text="1" />
                 <Button
                     android:id="@+id/sq2"
                     android:layout_width="@dimen/button_size"
@@ -221,14 +219,14 @@
                             android:layout_width="@dimen/switch_size"
                             android:layout_height="@dimen/switch_size"
                             android:text="A"
-                            android:backgroundTint="@color/colorPurplish"
+                            android:background="@drawable/switch_button"
                             android:onClick="pressSwitch"/>
                         <Button
                             android:id="@+id/swB"
                             android:layout_width="@dimen/switch_size"
                             android:layout_height="@dimen/switch_size"
                             android:text="B"
-                            android:backgroundTint="@color/colorPurplish"
+                            android:background="@drawable/switch_button"
                             android:onClick="pressSwitch"/>
                         <Button
                             android:id="@+id/swC"

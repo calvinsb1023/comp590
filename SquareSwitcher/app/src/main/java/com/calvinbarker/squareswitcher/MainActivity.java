@@ -1,67 +1,28 @@
 package com.calvinbarker.squareswitcher;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends Activity {
 
     Board board;
     Button[] buttons;
 
-    int[] switch0 = {1, 1, 1, 1,
-                        1, 1, 1, 1,
-                        1, 1, 1, 1,
-                        1, 1, 1, 1,};
 
-    int[] switchA = {-1, -1, -1, 1,
-                        1, 1, 1, 1,
-                        1, 1, 1, 1,
-                        1, 1, 1, 1};
-    int[] switchB = {1, 1, 1, -1,
-                        1, 1, 1, -1,
-                        1, -1, 1, -1,
-                        1, 1, 1, 1};
-    int[] switchC = {1, 1, 1, 1,
-                        -1, 1, 1, 1,
-                        1, 1, -1, 1,
-                        1, 1, -1, -1};
-    int[] switchD = {-1, 1, 1, 1,
-                        -1, -1, -1, -1,
-                        1, 1, 1, 1,
-                        1, 1, 1, 1};
-    int[] switchE = {1, 1, 1, 1,
-                        1, 1, -1, -1,
-                        -1, 1, -1, 1,
-                        -1, 1, 1, 1};
-    int[] switchF = {-1, 1, -1, 1,
-                        1, 1, 1, 1,
-                        1, 1, 1, 1,
-                        1, 1, -1, -1};
-    int[] switchG = {1, 1, 1, -1,
-                        1, 1, 1, 1,
-                        1, 1, 1, 1,
-                        1, 1, -1, -1};
-    int[] switchH = {1, 1, 1, 1,
-                        -1, -1, 1, -1,
-                        1, 1, 1, 1,
-                        1, 1, -1, -1};
-    int[] switchI = {1, -1, -1, -1,
-                        -1, -1, 1, 1,
-                        1, 1, 1, 1,
-                        1, 1, 1, 1};
-    int[] switchJ = {1, 1, 1, -1,
-                        -1, -1, 1, 1,
-                        1, -1, 1, 1,
-                        1, -1, 1, 1};
-
-    int[][] switches = {switch0, switchA, switchB, switchC, switchD, switchE, switchF, switchG,
-                        switchH, switchI, switchJ};
+    Map<Integer, Integer[]> buttonMap = new HashMap<Integer, Integer[]>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +45,13 @@ public class MainActivity extends Activity {
                 buttons[i].setBackground(darkButton);
             else
                 buttons[i].setBackground(lightButton);
+        }
+
+        if(board.isSolved()){
+            Toast toast = Toast.makeText(getApplicationContext(), "You won!",
+                    Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);
+            toast.show();
         }
     }
 
@@ -133,43 +101,43 @@ public class MainActivity extends Activity {
         switch (v.getId()) {
             case (R.id.swA):
                 board.logMove("A");
-                board.passSwitch(switchA);
+                board.passSwitch(Switches.switchA);
                 break;
             case (R.id.swB):
                 board.logMove("B");
-                board.passSwitch(switchB);
+                board.passSwitch(Switches.switchB);
                 break;
             case (R.id.swC):
                 board.logMove("C");
-                board.passSwitch(switchC);
+                board.passSwitch(Switches.switchC);
                 break;
             case (R.id.swD):
                 board.logMove("D");
-                board.passSwitch(switchD);
+                board.passSwitch(Switches.switchD);
                 break;
             case (R.id.swE):
                 board.logMove("E");
-                board.passSwitch(switchE);
+                board.passSwitch(Switches.switchE);
                 break;
             case (R.id.swF):
                 board.logMove("F");
-                board.passSwitch(switchF);
+                board.passSwitch(Switches.switchF);
                 break;
             case (R.id.swG):
                 board.logMove("G");
-                board.passSwitch(switchG);
+                board.passSwitch(Switches.switchG);
                 break;
             case (R.id.swH):
                 board.logMove("H");
-                board.passSwitch(switchH);
+                board.passSwitch(Switches.switchH);
                 break;
             case (R.id.swI):
                 board.logMove("I");
-                board.passSwitch(switchI);
+                board.passSwitch(Switches.switchI);
                 break;
             case (R.id.swJ):
                 board.logMove("J");
-                board.passSwitch(switchJ);
+                board.passSwitch(Switches.switchJ);
                 break;
         }
         setMoveCount();
@@ -177,12 +145,37 @@ public class MainActivity extends Activity {
         setSequence();
     }
 
+
     public void pressSolution(View v) {
         System.out.println("pressed");
-        board.processSolution();
-        setMoveCount();
-        setSquares(board.getAssignments());
-        setSequence();
+        String sol = board.processSolution();
 
+        System.out.println(sol);
+
+        for (int i = 0; i < sol.length(); i++) {
+
+            String move = String.valueOf(sol.charAt(i));
+            System.out.println("Move: " + move);
+            board.logMove(move);
+
+            int[] moveSwitch = board.switchMap.get(move);
+            board.passSwitch(moveSwitch);
+            int buttonId = getButtonId(moveSwitch);
+
+            System.out.println("Button id: " + buttonId);
+
+            setMoveCount();
+            setSquares(board.getAssignments());
+            setSequence();
+        }
+    }
+
+    private int getButtonId(int[] swt) {
+        for (int i = 0; i < Switches.switches.length; i++) {
+            if (Arrays.equals(Switches.switches[i], swt)) {
+                return Switches.idArray[i];
+            }
+        }
+        return -1;
     }
 }

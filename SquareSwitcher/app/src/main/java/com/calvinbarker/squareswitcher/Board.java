@@ -1,7 +1,6 @@
 package com.calvinbarker.squareswitcher;
 
 import java.util.HashMap;
-import java.util.Arrays;
 
 /**
  * Created by barkerc1 on 1/27/17.
@@ -12,63 +11,29 @@ public class Board {
     private int[] assignments;
     private int move_count;
     private String sequence;
-    private HashMap<String, int[]> switchMap = new HashMap<>();
+    protected HashMap<String, int[]> switchMap = new HashMap<>();
 
-    int[] switch0 = {1, 1, 1, 1,
-            1, 1, 1, 1,
-            1, 1, 1, 1,
-            1, 1, 1, 1,};
 
-    int[] switchA = {-1, -1, -1, 1,
-            1, 1, 1, 1,
-            1, 1, 1, 1,
-            1, 1, 1, 1};
-    int[] switchB = {1, 1, 1, -1,
-            1, 1, 1, -1,
-            1, -1, 1, -1,
-            1, 1, 1, 1};
-    int[] switchC = {1, 1, 1, 1,
-            -1, 1, 1, 1,
-            1, 1, -1, 1,
-            1, 1, -1, -1};
-    int[] switchD = {-1, 1, 1, 1,
-            -1, -1, -1, -1,
-            1, 1, 1, 1,
-            1, 1, 1, 1};
-    int[] switchE = {1, 1, 1, 1,
-            1, 1, -1, -1,
-            -1, 1, -1, 1,
-            -1, 1, 1, 1};
-    int[] switchF = {-1, 1, -1, 1,
-            1, 1, 1, 1,
-            1, 1, 1, 1,
-            1, 1, -1, -1};
-    int[] switchG = {1, 1, 1, -1,
-            1, 1, 1, 1,
-            1, 1, 1, 1,
-            1, 1, -1, -1};
-    int[] switchH = {1, 1, 1, 1,
-            -1, -1, 1, -1,
-            1, 1, 1, 1,
-            1, 1, -1, -1};
-    int[] switchI = {1, -1, -1, -1,
-            -1, -1, 1, 1,
-            1, 1, 1, 1,
-            1, 1, 1, 1};
-    int[] switchJ = {1, 1, 1, -1,
-            -1, -1, 1, 1,
-            1, -1, 1, 1,
-            1, -1, 1, 1};
+    /***********************************************************************/
 
-    int[][] switches = {switch0, switchA, switchB, switchC, switchD, switchE, switchF, switchG,
-            switchH, switchI, switchJ, switch0};
 
-    String[] switchNames = {"", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", ""};
-
+    /**
+     * Constructor
+     */
 
     public Board() {
         resetBoard();
     }
+
+
+
+
+
+    /***********************************************************************/
+
+    /**
+     * The following are board configurations
+     */
 
     /**
      *
@@ -91,7 +56,7 @@ public class Board {
      *
      * @return blank board where all items are white or black
      */
-    public int[] blankBoard() {
+    public int[] getBlankBoard() {
         if (Math.random() < 0.5) {
             int[] tB = {1, 1, 1, 1,
                     1, 1, 1, 1,
@@ -108,28 +73,69 @@ public class Board {
 
     /**
      *
-     * @return a board that can be beaten with some combination of switches so that the game
+     * @return void a board that can be beaten with some combination of switches so that the game
      * can actually be fun
      */
     public void setBeatableBoard() {
-        assignments = blankBoard();
-        for (int i = 0; i < switches.length; i++){
+        assignments = getBlankBoard();
+        for (int i = 0; i < Switches.switches.length-1; i++){
             if (Math.random() < 0.5) {
-                passSwitch(switches[i]);
+                passSwitch(Switches.switches[i]);
             }
         }
     }
 
+    /***********************************************************************/
+
+
+
+
+    /***********************************************************************/
+
+    /**
+     * Getters
+     */
+
     /**
      *
-     * @return an array of 16 integers (all randomly-generated 1's or -1's to correspond with black/white)
+     * @return board assignments (-1 or 1)
      */
     public int[] getAssignments(){
         return assignments;
     }
 
+
+    /**
+     *
+     * @return total moves
+     */
+    public int getMoveCount() {
+        return move_count;
+    }
+
+    /**
+     *
+     * @return a string of switches pressed
+     */
+    public String getSequence() {
+        return sequence;
+    }
+
+    /***********************************************************************/
+
+
+
+
+    /***********************************************************************/
+
+    /**
+     * Board utility functions
+     *
+     */
+
     protected void resetBoard() {
-        setBeatableBoard();
+        //setBeatableBoard();
+        assignments = getBlankBoard();
         move_count = 0;
         sequence = "";
     }
@@ -141,6 +147,39 @@ public class Board {
         }
     }
 
+    protected void logMove(String c) {
+        if (sequence.equals("")) {
+            sequence = c;
+        } else
+            sequence += ", " + c;
+    }
+
+    /**
+     * builds the switch map
+     */
+    protected void buildMap() {
+        for (int i = 0; i < Switches.switchNames.length; i++) {
+            switchMap.put(Switches.switchNames[i], Switches.switches[i]);
+        }
+    }
+
+    /***********************************************************************/
+
+
+
+
+    /***********************************************************************/
+
+    /**
+     * Automated solutions finder functions
+     */
+
+    /**
+     *
+     * @param squares - current board assignments
+     * @param swt - switch
+     * @return a board with the switch applied
+     */
     private int[] solSwitch(int[] squares, int[] swt) {
         int[] newSquares = new int[16];
         for (int i = 0; i < 16; i++)
@@ -148,14 +187,9 @@ public class Board {
         return newSquares;
     }
 
-    protected void logMove(String c) {
-        if (sequence.equals("")) {
-            sequence = c;
-        } else
-        sequence += ", " + c;
-    }
-
-    // Check to see if the puzzle has already been solved
+    /**
+     * Check to see if the board has already been solved
+     */
     public boolean isSolved(int[] squares) {
         int squareSums = 0;
         for (int i : squares)
@@ -165,64 +199,49 @@ public class Board {
         return false;
     }
 
-    public void processSolution() {
-
-        System.out.println(Arrays.toString(assignments));
-
-        for (int i = 0; i < switchNames.length; i++) {
-            switchMap.put(switchNames[i], switches[i]);
-        }
-
-        String sol = findSol(assignments, 0);
-
-        if (sol.equals("Solution Not Found")) {
-            System.out.println("No solution found");
-            sequence = "Sorry, no solution found :/";
-        } else {
-            System.out.println("Solution:" + sol);
-            move_count = 0;
-            sequence = "";
-            for (int i = 0; i < sol.length(); i++) {
-                String sw = String.valueOf(sol.charAt(i));
-                logMove(sw);
-                passSwitch(switchMap.get(sw));
-            }
-        }
+    public boolean isSolved(){
+        return isSolved(assignments);
     }
 
-    protected String findSol(int[] squares, int switchPos) {
+    /**
+     * Preps the board for the minimum solution
+     * @return a string a solutions
+     */
+    public String processSolution() {
+        buildMap();
+        move_count = 0;
+        sequence = "";
+        return findSol(assignments,0);
+    }
+
+    /**
+     * Works using a preorder, depth-first search of possible sequences
+     */
+    private String findSol(int[] squares, int switchPos) {
         // Returns blank string if no more switches are needed
         if (isSolved(squares)) {
             return "";
         } else {
-            String currentSol  = "Solution Not Found";
-            int [] tempSquares = solSwitch(squares, switches[switchPos]);
+            String currentSol  = "No solution";
+            int [] tempSquares = solSwitch(squares, Switches.switches[switchPos]);
 
-            for (int sw = switchPos + 1; sw < switches.length; sw++) {
+            for (int sw = switchPos + 1; sw < Switches.switches.length; sw++) {
                 String move = findSol(tempSquares, sw);
 
-                if (!move.equals("Solution Not Found")) {
-                    String tempSol = switchNames[switchPos].concat(move);
+                if (!move.equals("No solution")) {
+                    String tempSol = Switches.switchNames[switchPos].concat(move);
 
                     if (tempSol.length() < currentSol.length()) {
                         currentSol = tempSol;
                     }
                 }
             }
-            //System.out.println("out of for loop:" + currentSol);
             return currentSol;
         }
     }
 
-    public int getMoveCount() {
-        return move_count;
-    }
 
-    /**
-     *
-     * @return a list of minimal switches needed to solve the board
-     */
-    public String getSequence() {
-        return sequence;
-    }
+    /***********************************************************************/
+
+
 }
