@@ -85,6 +85,7 @@ public class Board {
         }
     }
 
+
     /***********************************************************************/
 
 
@@ -134,8 +135,8 @@ public class Board {
      */
 
     protected void resetBoard() {
-        //setBeatableBoard();
-        assignments = getBlankBoard();
+        setBeatableBoard();
+        //assignments = getBlankBoard();
         move_count = 0;
         sequence = "";
     }
@@ -151,7 +152,7 @@ public class Board {
         if (sequence.equals("")) {
             sequence = c;
         } else
-            sequence += ", " + c;
+            sequence += " " + c;
     }
 
     /**
