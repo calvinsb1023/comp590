@@ -191,7 +191,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:text="@string/sequence"/>
+                    android:text="@string/sequence"
+                    android:maxLines = "3"
+                    android:scrollbars = "vertical"/>
             </LinearLayout>
 
             <!-- layout for switch rows -->

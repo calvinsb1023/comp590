@@ -148,6 +148,10 @@ public class Board {
         }
     }
 
+    protected void changeSingleSquare(int i) {
+        assignments[i] *= -1;
+    }
+
     protected void logMove(String c) {
         if (sequence.equals("")) {
             sequence = c;

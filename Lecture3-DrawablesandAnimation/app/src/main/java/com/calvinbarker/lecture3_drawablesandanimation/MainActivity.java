@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView imv;
+    public static int X;
+    public static int Y;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,23 +20,35 @@ public class MainActivity extends AppCompatActivity {
         //imv.setBackgroundResource(R.drawable.mylist);
 
         //startAnim();
+
+        int X = 300;
+        int Y = 300;
     }
 
-    public void startAnim() {
-        ((AnimationDrawable)imv.getBackground()).start();
+    /**
+     * Function called when Click button on the App, The circle will move
+     * diagonally in the custom view.
+     * @param v
+     */
+    public void methodWeWant(View v)
+    {
+        Log.v("NIRJON", "method called");
+        X = X + 10;
+        Y = Y + 10;
+        CustomView cv = (CustomView)findViewById(R.id.funny1);
+        cv.invalidate();
     }
 
-    public void upFcn(View v) {
-        Log.v("TAG", "it should go up");
-
-        CustomView cv = (CustomView) findViewById();
-
-        cv.setOurPoin.....
-
+    public void moveUp (View v) {
+        X = X;
+        Y = Y - 10;
+        CustomView cv = (CustomView)findViewById(R.id.funny1);
+        cv.invalidate();
     }
 
-    public void downFcn(View v) {
-        Log.v("TAG", "it should go down");
-
+    public void moveDown (View v) {
+        Y = Y + 10;
+        CustomView cv = (CustomView)findViewById(R.id.funny1);
+        cv.invalidate();
     }
 }

@@ -14,23 +14,37 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Click Button to move Circle!"
+        android:id="@+id/textView" />
 
     <Button
-        android:onClick="upFcn"
-        android:id="@+id/up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Up"/>
+        android:text="Move Up"
+        android:id="@+id/buttonUp"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="moveUp"
+
+        />
+
     <Button
-        android:onClick="downFcn"
-        android:id="@+id/down"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Down"/>
-    <!--ImageView
-        android:id="@+id/imv"
-        android:layout_width="300dp"
-        android:layout_height="400dp" /-->
+        android:text="Move Down"
+        android:id="@+id/buttonDown"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="moveDown"
+
+        />
+
+    <com.calvinbarker.lecture3_drawablesandanimation.CustomView
+        android:id="@+id/funny1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>
