@@ -145,12 +145,77 @@ public class MainActivity extends Activity {
         setSequence();
     }
 
+    public void pressSquare(View v) {
+        System.out.println("Switch pressed");
+        switch (v.getId()) {
+            case (R.id.sq0):
+                board.changeSingleSquare(0);
+                break;
+            case (R.id.sq1):
+                board.changeSingleSquare(1);
+                break;
+            case (R.id.sq2):
+                board.changeSingleSquare(2);
+                break;
+            case (R.id.sq3):
+                board.changeSingleSquare(3);
+                break;
+            case (R.id.sq4):
+                board.changeSingleSquare(4);
+                break;
+            case (R.id.sq5):
+                board.changeSingleSquare(5);
+                break;
+            case (R.id.sq6):
+                board.changeSingleSquare(6);
+                break;
+            case (R.id.sq7):
+                board.changeSingleSquare(7);
+                break;
+            case (R.id.sq8):
+                board.changeSingleSquare(8);
+                break;
+            case (R.id.sq9):
+                board.changeSingleSquare(9);
+                break;
+            case (R.id.sq10):
+                board.changeSingleSquare(10);
+                break;
+            case (R.id.sq11):
+                board.changeSingleSquare(11);
+                break;
+            case (R.id.sq12):
+                board.changeSingleSquare(12);
+                break;
+            case (R.id.sq13):
+                board.changeSingleSquare(13);
+                break;
+            case (R.id.sq14):
+                board.changeSingleSquare(14);
+                break;
+            case (R.id.sq15):
+                board.changeSingleSquare(15);
+                break;
+        }
+        setMoveCount();
+        setSquares(board.getAssignments());
+        setSequence();
+    }
 
     public void pressSolution(View v) {
         System.out.println("pressed");
         String sol = board.processSolution();
 
         System.out.println(sol);
+
+        if (sol.equals("No solution")) {
+            Toast toast = Toast.makeText(getApplicationContext(), "No solution",
+                    Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);
+            toast.show();
+        }
+
+        else
 
         for (int i = 0; i < sol.length(); i++) {
 

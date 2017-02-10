@@ -61,22 +61,26 @@
                     android:id="@+id/sq0"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="0" />
+                    android:text="0"
+                    android:onClick="pressSquare"/>
                 <Button
                     android:id="@+id/sq1"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="1" />
+                    android:text="1"
+                    android:onClick="pressSquare"/>
                 <Button
                     android:id="@+id/sq2"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="2"/>
+                    android:text="2"
+                    android:onClick="pressSquare"/>
                 <Button
                     android:id="@+id/sq3"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="3"/>
+                    android:text="3"
+                    android:onClick="pressSquare"/>
             </LinearLayout>
 
             <!-- Layout to house cells of each row -->
@@ -91,22 +95,26 @@
                     android:id="@+id/sq4"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="4"/>
+                    android:text="4"
+                    android:onClick="pressSquare"/>
                 <Button
                     android:id="@+id/sq5"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="5"/>
+                    android:text="5"
+                    android:onClick="pressSquare"/>
                 <Button
                     android:id="@+id/sq6"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="6"/>
+                    android:text="6"
+                    android:onClick="pressSquare"/>
                 <Button
                     android:id="@+id/sq7"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="7"/>
+                    android:text="7"
+                    android:onClick="pressSquare"/>
             </LinearLayout>
 
             <!-- Layout to house cells of each row -->
@@ -121,22 +129,26 @@
                     android:id="@+id/sq8"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="8"/>
+                    android:text="8"
+                    android:onClick="pressSquare"/>
                 <Button
                     android:id="@+id/sq9"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="9"/>
+                    android:text="9"
+                    android:onClick="pressSquare"/>
                 <Button
                     android:id="@+id/sq10"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="10"/>
+                    android:text="10"
+                    android:onClick="pressSquare"/>
                 <Button
                     android:id="@+id/sq11"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="11" />
+                    android:text="11"
+                    android:onClick="pressSquare"/>
                 <!--android:backgroundTint="@android:color/background_light"-->
             </LinearLayout>
 
@@ -152,22 +164,26 @@
                     android:id="@+id/sq12"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="12"/>
+                    android:text="12"
+                    android:onClick="pressSquare"/>
                 <Button
                     android:id="@+id/sq13"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="13"/>
+                    android:text="13"
+                    android:onClick="pressSquare"/>
                 <Button
                     android:id="@+id/sq14"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="14"/>
+                    android:text="14"
+                    android:onClick="pressSquare"/>
                 <Button
                     android:id="@+id/sq15"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:text="15" />
+                    android:text="15"
+                    android:onClick="pressSquare"/>
             </LinearLayout>
         </LinearLayout>
 
