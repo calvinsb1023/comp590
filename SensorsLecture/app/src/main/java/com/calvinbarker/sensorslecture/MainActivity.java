@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         senSensorManager.registerListener(this, senAccelerometer , SensorManager.SENSOR_DELAY_NORMAL);
 
-        //List l = sm.getSensorList(Sensor.TYPE_ALL);
+        List l = senSensorManager.getSensorList(Sensor.TYPE_ALL);
         //Sensor s = sm.getDefaultSensor(Sensor.TYPE_LIGHT);
 
         //sm.registerListener(this, s, 1000000);
@@ -40,9 +41,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         //System.out.println("Sensor list size: " + l.size());
 
-        /*for (int i = 0; i < l.size(); i++) {
+        System.out.println("We're running...");
+        Log.v("TAG", "made it");
+
+        for (int i = 0; i < l.size(); i++) {
             System.out.println("Sensor: " + l.get(i).toString());
-        }*/
+        }
     }
 
     @Override
