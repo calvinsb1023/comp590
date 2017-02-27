@@ -32,9 +32,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         accelerometer = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         light = sm.getDefaultSensor(Sensor.TYPE_LIGHT);
 
-
-
-
         if (accelerometer == null) {
             setStatus((TextView) findViewById(R.id.accel_status), "Not Found");
             setRange((TextView) findViewById(R.id.accel_range), "N/A");

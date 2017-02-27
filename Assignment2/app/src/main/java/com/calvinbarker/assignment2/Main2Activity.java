@@ -21,7 +21,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 
     private SensorManager sm;
     private Sensor s;
-    private long lastUpdate = 0;
+    private long lastUpdate = System.currentTimeMillis();
     private PlotView pv;
     private Random rand = new Random();
 
@@ -52,21 +52,21 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         startActivity(intent);
     }
 
-    public void foo(View v) {
+    /*public void foo(View v) {
 
         System.out.println("Press!");
         pv = (PlotView)findViewById(R.id.pv);
 
         pv.addPoint(rand.nextFloat() * 100);
         pv.invalidate();
-    }
+    }*/
 
-    public void foo() {
+    /*public void foo() {
         pv = (PlotView)findViewById(R.id.pv);
 
         pv.addPoint(rand.nextFloat() * 100);
         pv.invalidate();
-    }
+    }*/
 
     @Override
     protected void onPause() {
@@ -89,7 +89,8 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 
             long curTime = System.currentTimeMillis();
 
-            if ((curTime - lastUpdate) > 1000) {
+            long interval = curTime - lastUpdate;
+            if (interval > 1000) {
                 lastUpdate = curTime;
 
                 float xSq = (float) Math.pow((double) x, 2);
@@ -98,56 +99,29 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 
                 float val = (float) Math.pow(xSq + ySq + zSq, 0.5);
 
-                pv.addPoint(val);
+                pv.addPoint(val, interval);
                 pv.invalidate();
             }
         } else if (s.getType() == Sensor.TYPE_LIGHT
                 && event.sensor.getType() == Sensor.TYPE_LIGHT) {
             long curTime = System.currentTimeMillis();
 
-            if ((curTime - lastUpdate) > 1000) {
+            int interval = (int) (curTime - lastUpdate);
+
+            if ((interval) > 1000) {
                 lastUpdate = curTime;
 
-                pv.addPoint(event.values[0]);
+                pv.addPoint(event.values[0], curTime);
                 pv.invalidate();
             }
 
         }
-
-        /*if (s.getType() == Sensor.TYPE_ACCELEROMETER) {
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
-
-            long curTime = System.currentTimeMillis();
-
-            if ((curTime - lastUpdate) > 1000) {
-                long diffTime = (curTime - lastUpdate);
-                lastUpdate = curTime;
-
-                float speed = Math.abs(x + y + z - last_x - last_y - last_z)/ diffTime * 10000;
-
-                float xSq = (float) Math.pow( (double) x, 2);
-                float ySq = (float) Math.pow( (double) y, 2);
-                float zSq = (float) Math.pow( (double) z, 2);
-
-                float val = (float) Math.pow(xSq + ySq + zSq, 0.5);
-
-                //if (speed > SHAKE_THRESHOLD) {
-                pv.addPoint(val);
-                pv.invalidate();
-                //}
-
-                last_x = x;
-                last_y = y;
-                last_z = z;
-            }
-        }*/
-
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
+
 }
