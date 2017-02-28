@@ -10,20 +10,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Main2Activity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager sm;
     private Sensor s;
     private long lastUpdate = System.currentTimeMillis();
+    private long initialTime = System.currentTimeMillis();
+    private float lastVal;
+    private long lastTime;
     private PlotView pv;
-    private Random rand = new Random();
+    private ImageView imv;
+    private Timer t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,8 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         TextView tv = (TextView) findViewById(R.id.plot_title);
         pv = (PlotView)findViewById(R.id.pv);
+        imv = (ImageView) findViewById(R.id.imv);
+        imv.setImageResource(R.drawable.fire);
 
         if (getIntent().getStringExtra("sensorName").equals("accel")) {
             s = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -45,6 +54,9 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 
             tv.setText("Light Sensor");
         }
+
+        t = new Timer();
+        t.schedule(new DataTimer(), 0, 100);
     }
 
     public void goBack(View v) {
@@ -52,21 +64,19 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         startActivity(intent);
     }
 
-    /*public void foo(View v) {
+    public void toggleAnimation(View v) {
+        PlotView pv = (PlotView) findViewById(R.id.pv);
 
-        System.out.println("Press!");
-        pv = (PlotView)findViewById(R.id.pv);
 
-        pv.addPoint(rand.nextFloat() * 100);
-        pv.invalidate();
-    }*/
+        if (pv.getVisibility() == View.VISIBLE) {
+            pv.setVisibility(View.GONE);
+            imv.setVisibility(View.VISIBLE);
+        } else {
+            pv.setVisibility(View.VISIBLE);
+            imv.setVisibility(View.GONE);
+        }
 
-    /*public void foo() {
-        pv = (PlotView)findViewById(R.id.pv);
-
-        pv.addPoint(rand.nextFloat() * 100);
-        pv.invalidate();
-    }*/
+    }
 
     @Override
     protected void onPause() {
@@ -90,7 +100,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
             long curTime = System.currentTimeMillis();
 
             long interval = curTime - lastUpdate;
-            if (interval > 1000) {
+            if (interval > 100) {
                 lastUpdate = curTime;
 
                 float xSq = (float) Math.pow((double) x, 2);
@@ -98,22 +108,45 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
                 float zSq = (float) Math.pow((double) z, 2);
 
                 float val = (float) Math.pow(xSq + ySq + zSq, 0.5);
+                lastVal = val;
 
-                pv.addPoint(val, interval);
-                pv.invalidate();
+                //pv.addPoint(val, interval);
+                //pv.invalidate();
+
+                if (val <= 10) {
+                    imv.setImageResource(R.drawable.house_1);
+                } else if (val <= 25) {
+                    imv.setImageResource(R.drawable.house_2);
+                } else {
+                    imv.setImageResource(R.drawable.house_3);
+                }
+
             }
         } else if (s.getType() == Sensor.TYPE_LIGHT
                 && event.sensor.getType() == Sensor.TYPE_LIGHT) {
-            long curTime = System.currentTimeMillis();
+            final SensorEvent e = event;
 
+            long curTime = System.currentTimeMillis();
+            float val = e.values[0];
+            final int scale = Math.round(3000 * val / s.getMaximumRange());
             int interval = (int) (curTime - lastUpdate);
 
             if ((interval) > 1000) {
                 lastUpdate = curTime;
 
-                pv.addPoint(event.values[0], curTime);
-                pv.invalidate();
+                //pv.addPoint(val, curTime);
+                //pv.invalidate();
             }
+
+            if (val <= 1000 ) {
+                imv.setImageResource(R.drawable.flame_1);
+            } else if (val <= 2000) {
+                imv.setImageResource(R.drawable.fire);
+            } else {
+                imv.setImageResource(R.drawable.flame_3);
+            }
+            imv.setMaxWidth(scale);
+            imv.setMaxHeight(scale);
 
         }
     }
@@ -121,6 +154,25 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    private class DataTimer extends TimerTask {
+
+        @Override
+        public void run() {
+            runOnUiThread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+
+                        pv.addPoint(lastVal, System.currentTimeMillis() - initialTime);
+                        pv.invalidate();
+                        //add point currentTime - time
+                        //invalidate
+                    }
+                }
+            );
+        }
     }
 
 
