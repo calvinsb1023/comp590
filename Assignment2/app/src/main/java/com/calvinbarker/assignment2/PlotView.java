@@ -63,9 +63,6 @@ public class PlotView extends View {
         if (points.size() > 0){
             maxX = points.get( points.size() - 1 ).time;
             minX = points.get(0).time;
-
-            //minTime = new Date(points.get(0).time);
-            //maxTime = new Date(points.get( points.size() - 1 ).time);
         } else {
             maxX = 1;
             minX = 0;
@@ -123,10 +120,14 @@ public class PlotView extends View {
             canvas.drawLine(margin + i / (float) divs * (float) .8 * width, margin,
                     margin + i / (float) divs * (float) .8 * height, width - margin,
                     gridPaint);
+
+            //x-axis labels
+            int xInt = currentSec + (int) i;
+            canvas.drawText(Integer.toString(xInt), margin + i / divs * (float) .8 * width, (float) 0.93 * height, gridPaint);
         }
 
         gridPaint.setTextSize(24);
-        canvas.drawText("Time (Seconds)", width * (float) .6, height * (float) .98, gridPaint);
+        canvas.drawText("Time (0.1 S)", width * (float) .6, height * (float) .98, gridPaint);
 
         canvas.save();
         canvas.rotate((float) -90, width / 2, height / 2);
@@ -141,14 +142,14 @@ public class PlotView extends View {
 
         for(float i = 0; i < averages.size(); i++) {
             if (averages.get((int) i).value != -1) {
-                float x = (margin + (averages.get((int) i).time - minX)/x_range * (float) 0.8 * width);
+                float x = margin + i / divs * (float) 0.8 * width;
                 float y = height - (((averages.get((int) i).value - minY )/ y_range * height) * (float) .8 + margin);
 
                 canvas.drawCircle(x, y, 5f, gridPaint);
 
                 // Draw the line
                 if (i > 0 && averages.get((int) i - 1).value != (float) -1) {
-                    float xPrev = (margin + (averages.get((int) i - 1).time - minX)/x_range * (float) 0.8 * width);
+                    float xPrev = margin + (i - 1) / divs * (float) 0.8 * width;
                     float yPrev = height - (((averages.get((int) i - 1).value - minY )/ y_range * height) * (float) .8 + margin);
 
                     canvas.drawLine(x, y, xPrev, yPrev, gridPaint);
@@ -162,14 +163,14 @@ public class PlotView extends View {
 
         for(float i = 0; i < standardDevs.size(); i++) {
             if (standardDevs.get((int) i).value != -1) {
-                float x = (margin + (standardDevs.get((int) i).time - minX)/x_range * (float) 0.8 * width);
+                float x = margin + i / divs * (float) 0.8 * width;
                 float y = height - (((standardDevs.get((int) i).value - minY )/ y_range * height) * (float) .8 + margin);
 
                 canvas.drawCircle(x, y, 5f, gridPaint);
 
                 // Draw the line
                 if (i > 0 && standardDevs.get((int) i - 1).value != (float) -1) {
-                    float xPrev = (margin + (standardDevs.get((int) i - 1).time - minX)/x_range * (float) 0.8 * width);
+                    float xPrev = margin + (i - 1) / divs * (float) 0.8 * width;
                     float yPrev = height - (((standardDevs.get((int) i - 1).value - minY )/ y_range * height) * (float) .8 + margin);
 
                     canvas.drawLine(x, y, xPrev, yPrev, gridPaint);
@@ -185,27 +186,20 @@ public class PlotView extends View {
 
             gridPaint.setColor(Color.BLUE);
 
-            float x = (margin + (points.get((int) i).time - minX)/x_range * (float) 0.8 * width);
+            float x = margin + i / divs * (float) 0.8 * width;
             float y = height - (((points.get((int) i).value - minY )/ y_range * height) * (float) .8 + margin);
 
             canvas.drawCircle(x, y, 5f, gridPaint);
 
             // Draw the line
             if (i > 0) {
-                float xPrev = (margin + (points.get((int) i - 1).time - minX)/x_range * (float) 0.8 * width);
+                float xPrev = margin + (i - 1) / divs * (float) 0.8 * width;
                 float yPrev = height - (((points.get((int) i - 1).value - minY )/ y_range * height) * (float) .8 + margin);
 
                 canvas.drawLine(x, y, xPrev, yPrev, gridPaint);
             }
 
             gridPaint.setColor(Color.parseColor("#929292"));
-            int xInt = currentSec + (int) i;
-
-            canvas.drawText(Integer.toString(xInt), margin + i / ((float) points.size() - 1) * (float) .8 * width, (float) 0.93 * height, gridPaint);
-
-            /*Date currTime = new Date(points.get((int) i).time);
-            int timeLabel = currTime.getSeconds() - minTime.getSeconds() - startTime.getSeconds();
-            canvas.drawText(Integer.toString(timeLabel), margin + i / (float) divs * (float) .8 * width, (float) 0.93 * height, gridPaint);*/
         }
     }
 
@@ -230,16 +224,18 @@ public class PlotView extends View {
     public void addPoint(float num, long t) {
 
         long prevTime = 0;
-        currentSec++;
 
         if (points.size() > 0) {
             prevTime = points.get( points.size() - 1 ).time;
         }
+
+
         long offset = t - lastUpdate + prevTime;
         lastUpdate = System.currentTimeMillis();
 
         // If the length of the list exceeds 10, drop the first element
         if (points.size() > 10) {
+            currentSec++;
             points.remove(0);
         }
 

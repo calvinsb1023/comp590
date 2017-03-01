@@ -27,7 +27,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
     private long lastUpdate = System.currentTimeMillis();
     private long initialTime = System.currentTimeMillis();
     private float lastVal;
-    private long lastTime;
+    //private long lastTime;
     private PlotView pv;
     private ImageView imv;
     private Timer t;
@@ -75,7 +75,6 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
             pv.setVisibility(View.VISIBLE);
             imv.setVisibility(View.GONE);
         }
-
     }
 
     @Override
@@ -99,29 +98,24 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 
             long curTime = System.currentTimeMillis();
 
-            long interval = curTime - lastUpdate;
-            if (interval > 100) {
-                lastUpdate = curTime;
+            lastUpdate = curTime;
 
-                float xSq = (float) Math.pow((double) x, 2);
-                float ySq = (float) Math.pow((double) y, 2);
-                float zSq = (float) Math.pow((double) z, 2);
+            float xSq = (float) Math.pow((double) x, 2);
+            float ySq = (float) Math.pow((double) y, 2);
+            float zSq = (float) Math.pow((double) z, 2);
 
-                float val = (float) Math.pow(xSq + ySq + zSq, 0.5);
-                lastVal = val;
+            float val = (float) Math.pow(xSq + ySq + zSq, 0.5);
+            lastVal = val;
 
-                //pv.addPoint(val, interval);
-                //pv.invalidate();
 
-                if (val <= 10) {
-                    imv.setImageResource(R.drawable.house_1);
-                } else if (val <= 25) {
-                    imv.setImageResource(R.drawable.house_2);
-                } else {
-                    imv.setImageResource(R.drawable.house_3);
-                }
-
+            if (val <= 10) {
+                imv.setImageResource(R.drawable.house_1);
+            } else if (val <= 25) {
+                imv.setImageResource(R.drawable.house_2);
+            } else {
+                imv.setImageResource(R.drawable.house_3);
             }
+
         } else if (s.getType() == Sensor.TYPE_LIGHT
                 && event.sensor.getType() == Sensor.TYPE_LIGHT) {
             final SensorEvent e = event;
@@ -129,24 +123,23 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
             long curTime = System.currentTimeMillis();
             float val = e.values[0];
             final int scale = Math.round(3000 * val / s.getMaximumRange());
-            int interval = (int) (curTime - lastUpdate);
 
-            if ((interval) > 1000) {
-                lastUpdate = curTime;
+            lastUpdate = curTime;
+            lastVal = val;
 
-                //pv.addPoint(val, curTime);
-                //pv.invalidate();
-            }
-
-            if (val <= 1000 ) {
+            /*if (val <= 1000 ) {
                 imv.setImageResource(R.drawable.flame_1);
             } else if (val <= 2000) {
                 imv.setImageResource(R.drawable.fire);
             } else {
                 imv.setImageResource(R.drawable.flame_3);
-            }
-            imv.setMaxWidth(scale);
-            imv.setMaxHeight(scale);
+            }*/
+
+
+            imv.setImageResource(R.drawable.fire);
+            imv.requestLayout();
+            imv.getLayoutParams().width = scale;
+            imv.getLayoutParams().height = scale;
 
         }
     }
@@ -167,13 +160,10 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 
                         pv.addPoint(lastVal, System.currentTimeMillis() - initialTime);
                         pv.invalidate();
-                        //add point currentTime - time
-                        //invalidate
+                        imv.postInvalidate();
                     }
                 }
             );
         }
     }
-
-
 }
