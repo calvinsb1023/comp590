@@ -122,7 +122,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 
             long curTime = System.currentTimeMillis();
             float val = e.values[0];
-            final int scale = Math.round(3000 * val / s.getMaximumRange());
+            final int scale = Math.round(1500 * val / s.getMaximumRange());
 
             lastUpdate = curTime;
             lastVal = val;
@@ -136,7 +136,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
             }*/
 
 
-            imv.setImageResource(R.drawable.fire);
+            imv.setImageResource(R.drawable.sun2);
             imv.requestLayout();
             imv.getLayoutParams().width = scale;
             imv.getLayoutParams().height = scale;
