@@ -79,12 +79,17 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 
     @Override
     protected void onPause() {
+
         super.onPause();
+        sm.unregisterListener(this);
     }
 
     @Override
     protected void onResume() {
+
         super.onResume();
+        sm.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
+
     }
 
     @Override
@@ -140,6 +145,8 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
             imv.requestLayout();
             imv.getLayoutParams().width = scale;
             imv.getLayoutParams().height = scale;
+
+            //imv.postInvalidate();
 
         }
     }
