@@ -3,7 +3,7 @@ package com.calvinbarker.assignment3;
 import android.graphics.Color;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,11 +13,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.identity.intents.Address;
-import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -52,11 +49,14 @@ public class MainActivity extends AppCompatActivity
     private Circle brooksCir, polkCir, wellCir;
 
     private List<LatLng> locs = null;
-    private Map<LatLng, Circle> latMat = null;
+    private Map<LatLng, Circle> latMap = null;
 
 
     private LatLng lastLoc = null;
     private Marker currentMarker = null;
+
+    private MediaPlayer mp = null;
+    private Map<LatLng, Integer> songMap = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +92,8 @@ public class MainActivity extends AppCompatActivity
         locs.add(polk);
         locs.add(well);
 
-        latMat = new HashMap<LatLng, Circle>();
+        latMap = new HashMap<>();
+        songMap = new HashMap<>();
 
         initMap();
     }
@@ -154,9 +155,13 @@ public class MainActivity extends AppCompatActivity
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.dot3))
         );
 
-        latMat.put(brooks, brooksCir);
-        latMat.put(polk, polkCir);
-        latMat.put(well, wellCir);
+        latMap.put(brooks, brooksCir);
+        latMap.put(polk, polkCir);
+        latMap.put(well, wellCir);
+
+        songMap.put(brooks, R.raw.ultralightbeam);
+        songMap.put(polk, R.raw.famous);
+        songMap.put(well, R.raw.waves);
     }
 
     @Override
@@ -197,6 +202,14 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public void startTest(View v) {
+        start(brooks);
+    }
+
+    public void stopTest(View v) {
+        stop();
+    }
+
     @Override
     public void onLocationChanged(Location location) {
         System.out.println("Location: " + location.getLatitude() + ", " + location.getLongitude());
@@ -208,24 +221,36 @@ public class MainActivity extends AppCompatActivity
         float[] results = new float[3];
         for (LatLng l : locs) {
             Location.distanceBetween(location.getLatitude(), location.getLongitude(), l.latitude, l.longitude, results);
-            System.out.println("Circle visibility: " + latMat.get(l).isVisible() + ". Distance: " + results[0]);
+            System.out.println("Circle visibility: " + latMap.get(l).isVisible() + ". Distance: " + results[0]);
 
-            if (latMat.get(l) != null) {
+            if (latMap.get(l) != null) {
                 if (results[0] <= 25) {
-                    if (!latMat.get(l).isVisible()) {
-                        toggle(latMat.get(l));
+                    if (!latMap.get(l).isVisible()) {
+                        toggle(latMap.get(l));
+                        start(l);
                         // TODO: play media
                     }
                     // Do nothing if already is visible
 
-                } else if (latMat.get(l).isVisible()) {
-                    toggle(latMat.get(l));
+                } else if (latMap.get(l).isVisible()) {
+                    toggle(latMap.get(l));
+                    stop();
                     // TODO: stop media
                 }
             }
         }
     }
 
+    private void start(LatLng l) {
+        mp = MediaPlayer.create(this.getApplicationContext(), songMap.get(l));
+        mp.start();
+    }
+
+    private void stop() {
+        mp.stop();
+        mp.release();
+        mp = null;
+    }
     // Write location coordinates on UI
     private void writeActualLocation(Location location) {
         textLat.setText( "Lat: " + location.getLatitude() );
